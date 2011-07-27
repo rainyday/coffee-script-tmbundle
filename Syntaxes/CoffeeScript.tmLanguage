@@ -39,7 +39,7 @@
 			<key>comment</key>
 			<string>match stuff like: a -&gt; … </string>
 			<key>match</key>
-			<string>(\([^()]*?\))\s*([=-]&gt;)</string>
+			<string>(\([^()]*?\))?\s*([=-]&gt;)</string>
 			<key>name</key>
 			<string>meta.inline.function.coffee</string>
 		</dict>
@@ -49,12 +49,12 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.operator.new.coffee</string>
+					<string>keyword.other.new.coffee</string>
 				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.type.instance.coffee</string>
+					<string>entity.name.type.class.coffee</string>
 				</dict>
 			</dict>
 			<key>match</key>
@@ -197,6 +197,40 @@
 		</dict>
 		<dict>
 			<key>begin</key>
+			<string>(?&lt;=[=(:]|^|return|&amp;&amp;|\|\||!)\s*(/)(?![/*+{}?])</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.coffee</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>(/)[igm]*</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.coffee</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.regexp.coffee</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>constant.character.escape.js</string>
+				</dict>
+			</array>
+		</dict>
+		<!--
+		<dict>
+			<key>begin</key>
 			<string>/{3}</string>
 			<key>end</key>
 			<string>/{3}[imgy]{0,4}</string>
@@ -220,6 +254,7 @@
 			<key>name</key>
 			<string>string.regexp.coffee</string>
 		</dict>
+		-->
 		<dict>
 			<key>match</key>
 			<string>\b(?&lt;!\.)(break|by|catch|continue|else|finally|for|in|of|if|return|switch|then|throw|try|unless|when|while|until|loop|do|(?&lt;=for)\s+own)(?!\s*:)\b</string>
@@ -240,21 +275,14 @@
 					<key>name</key>
 					<string>variable.assignment.coffee</string>
 				</dict>
-				<key>4</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.separator.key-value</string>
-				</dict>
-				<key>5</key>
+				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.operator.coffee</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>([a-zA-Z\$_](\w|\$|\.)*\s*(?!\::)((:)|(=))(?!(\s*\(.*\))?\s*((=|-)&gt;)))</string>
-			<key>name</key>
-			<string>variable.assignment.coffee</string>
+			<string>([a-zA-Z\$_](?:\w|\$|\.)*)(:|\s*=(?!=))(?!(\s*\(.*\))?\s*((=|-)&gt;))</string>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -332,21 +360,29 @@
 			<key>name</key>
 			<string>meta.function.coffee</string>
 		</dict>
+		<!--I don't think this ever actually does anything?
 		<dict>
 			<key>match</key>
 			<string>(=|-)&gt;</string>
 			<key>name</key>
 			<string>storage.type.function.coffee</string>
 		</dict>
+		-->
 		<dict>
 			<key>match</key>
-			<string>\b(?&lt;!\.)(true|on|yes)(?!\s*[:=])\b</string>
+			<string>[A-Za-z_][A-Za-z_0-9]*(?=\s*\()</string>
+			<key>name</key>
+			<string>meta.function-call.coffee</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b(?&lt;!\.)(true|on|yes)\b</string>
 			<key>name</key>
 			<string>constant.language.boolean.true.coffee</string>
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b(?&lt;!\.)(false|off|no)(?!\s*[:=])\b</string>
+			<string>\b(?&lt;!\.)(false|off|no)\b</string>
 			<key>name</key>
 			<string>constant.language.boolean.false.coffee</string>
 		</dict>
